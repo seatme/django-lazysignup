@@ -3,3 +3,17 @@ dist
 *.pyc
 _build
 *~
+
+# Vim
+*.swp
+
+# Pycharm
+.idea/
+
+# Virtual environments
+venv/
+env/
+
+# Coverage
+.coverage
+htmlcov/

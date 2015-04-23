@@ -2,6 +2,12 @@
 Changelog
 =========
 
+1.0.0
+-----
+* Add support for Django 1.7 migrations
+* Drop support for Django 1.6 and earlier
+* Add tests for custom user model
+
 0.12.2
 ------
 

@@ -9,14 +9,22 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 
+try:  # pragma: no cover
+    from django.utils.module_loading import import_string
+except ImportError:  # pragma: no cover
+    from django.utils.module_loading import import_by_path as import_string
+
+
 from lazysignup.decorators import allow_lazy_user
 from lazysignup.exceptions import NotLazyError
-from lazysignup.forms import UserCreationForm
 from lazysignup.models import LazyUser
+from lazysignup import constants
+
+CREATION_FORM = import_string(constants.LAZYSIGNUP_CUSTOM_USER_CREATION_FORM)
 
 
 @allow_lazy_user
-def convert(request, form_class=UserCreationForm,
+def convert(request, form_class=CREATION_FORM,
             redirect_field_name='redirect_to',
             anonymous_redirect=settings.LOGIN_URL,
             template_name='lazysignup/convert.html',
@@ -68,7 +76,11 @@ def convert(request, form_class=UserCreationForm,
     # templates to be searched.
     if request.is_ajax():
         template_name = [ajax_template_name, template_name]
-    return render_to_response(template_name, {
+    return render_to_response(
+        template_name,
+        {
             'form': form,
             'redirect_to': redirect_to
-        }, context_instance=RequestContext(request))
+        },
+        context_instance=RequestContext(request)
+    )
