@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0.0'
+version = '1.0.0.sm0'
 
 tests_require = [
     'coverage>=3.7.1',
